@@ -1,0 +1,35 @@
+{% load widget_tweaks %}
+{% if form.non_field_errors%}
+<div class="alert alert-danger" role="alerts">
+ {%for error in form.non_field_errors%}
+  <p  {%if forloop.last %}class="mb-0" {%endif%}>{{error}}</p>
+ {%endfor%}
+</div>
+ {%endif%}
+
+
+
+<!-- {{form.as_p}}as_table or as_ul -->
+ {%for field in form %}
+ <div class="form-group">
+   {{ field.label_tag }}
+   {% if form.is_bound %}<!--if found data-->
+        {% if field.errors %}
+            {% render_field field class="form-control mb-2 is-invalid" %}
+            {%for error in field.errors%}
+               <div class="invalid-feedback">{{error}}</div>
+            {%endfor%}
+        {%else%}
+            {% render_field field class="form-control mb-2 is-valid" %}
+        {% endif %}
+   {%else%}
+    {% render_field field class="form-control mb-2" %}
+   {% endif %}
+ 
+    <!-- {% if field.help_text %}
+    <small class="form-text text-muted">
+        {{field.help_text}}
+    </small>
+    {%endif%} -->
+</div>
+ {%endfor%}

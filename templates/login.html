@@ -1,0 +1,21 @@
+{%extends 'base.html'%}
+
+{%block title%} Sign Up {%endblock%}
+
+
+{% block body %}
+
+<div class="container col-lg-4 p-4 mt-5 signup">
+    <h2 class="text-center"> Log In </h2>
+    <form action="" method="post" novalidate>
+       {%csrf_token%}
+       <input type="hidden" name="next" value="{{next}}">
+       {% include 'includes/form.html' %}
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+    <div class="card-footer text-muted text-center mt-2">
+        Create New Account? <a href="{%url 'signup'%}">Sign Up</a>
+    </div>
+</div>
+
+{% endblock %}
