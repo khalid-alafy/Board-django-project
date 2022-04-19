@@ -13,7 +13,7 @@ class Board(models.Model):
         return self.name 
     def __repr__(self):
         return self.name+' '+self.description
-
+class Topic(models.Model):
     subject=CharField(max_length=4000)
     board=models.ForeignKey(Board,related_name='topics',on_delete=models.CASCADE)
     created_by=models.ForeignKey(User,related_name='topics',on_delete=models.CASCADE)
