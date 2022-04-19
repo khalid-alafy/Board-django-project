@@ -1,0 +1,6 @@
+1- rd .git /S/Q
+2-git init
+3-git add .
+4-git commit -m "<comment>"
+5-git remote add origin <link of repository .git>
+6-git push -u origin <name of repository>
