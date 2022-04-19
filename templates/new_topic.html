@@ -11,7 +11,7 @@
 <form action="{% url 'new_topic' board.pk%}" method="POST" novalidate >
     {%csrf_token%}
     {% include 'includes/form.html' %}   
-    <button type="submit" class="btn btn-success">Add</button>
+    <button type="submit" class="btn btn-primary">Add</button>
 </form>
 
 {% endblock %}
