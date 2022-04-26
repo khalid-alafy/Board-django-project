@@ -11,13 +11,17 @@ class Board(models.Model):
     description=models.CharField(max_length=150)
     def __str__(self):
         return self.name 
-    def __repr__(self):
-        return self.name+' '+self.description
+    def get_posts_count(self):
+        return Post.objects.filter(topic__board=self).count()
+    def get_last_post(self):
+        return Post.objects.filter(topic__board=self).order_by("-created_dt").first()
+        
 class Topic(models.Model):
     subject=CharField(max_length=4000)
     board=models.ForeignKey(Board,related_name='topics',on_delete=models.CASCADE)
     created_by=models.ForeignKey(User,related_name='topics',on_delete=models.CASCADE)
     created_dt=models.DateTimeField(auto_now_add=True)
+    views=models.PositiveIntegerField(default=0)
     def __str__(self):
         return self.subject
 

@@ -1,6 +1,6 @@
 {%extends 'base.html'%}
 
-{%block title%} Sign Up {%endblock%}
+{%block title%} Login {%endblock%}
 
 
 {% block body %}
@@ -14,6 +14,8 @@
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
     <div class="card-footer text-muted text-center mt-2">
+        <!-- <a class="psds-link psds-theme--dark psds-link--appearance-default" href="{%url 'change_password'%}">Forgot password?</a> -->
+        <br>
         Create New Account? <a href="{%url 'signup'%}">Sign Up</a>
     </div>
 </div>
