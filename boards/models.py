@@ -25,7 +25,7 @@ class Topic(models.Model):
     def __str__(self):
         return self.subject
 
-class Post (models.Model):
+class Post(models.Model):
     message = models.TextField(max_length=4000)
     topic=models.ForeignKey(Topic,related_name='posts',on_delete=models.CASCADE)
     created_by = models.ForeignKey(User,related_name='posts',on_delete=models.CASCADE)
