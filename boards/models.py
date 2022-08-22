@@ -5,7 +5,7 @@ from django.db.models import CharField
 from django.utils.text import Truncator
 
 # Create your models here.
-
+# after changes
 class Board(models.Model):
     name=models.CharField(max_length=50,unique=True)
     description=models.CharField(max_length=150)
