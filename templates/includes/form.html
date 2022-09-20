@@ -13,6 +13,7 @@
  {%for field in form %}
  <div class="form-group">
    {{ field.label_tag }}
+   {{form.media}}
    {% if form.is_bound %}<!--if found data-->
         {% if field.errors %}
             {% render_field field class="form-control mb-2 is-invalid" %}
@@ -20,6 +21,7 @@
                <div class="invalid-feedback">{{error}}</div>
             {%endfor%}
         {%else%}
+            
             {% render_field field class="form-control mb-2 is-valid" %}
         {% endif %}
    {%else%}

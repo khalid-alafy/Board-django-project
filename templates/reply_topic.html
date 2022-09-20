@@ -27,7 +27,9 @@
         <small class="text-muted">{{ post.created_dt }}</small>
       </div>
     </div>
-     {{ post.message }}
+    {% autoescape off %}
+    {{ post.message }}
+    {% endautoescape %}
 </div>
 {%endfor%}
 {% endblock %}
