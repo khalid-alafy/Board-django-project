@@ -10,6 +10,8 @@ from django.views.generic import UpdateView,ListView
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.core.paginator import Paginator , PageNotAnInteger , EmptyPage
+from froala_editor.widgets import FroalaEditor
+
 
 # Create your views here.
 # def home(request):
@@ -97,8 +99,11 @@ class NewTopicView(View):
 #new commit
 def topic_posts(request,board_id,topic_id):
     topic=get_object_or_404(Topic,board__pk=board_id,pk=topic_id)
-    topic.views+=1
-    topic.save()
+    session_key="view_topic_{}".format(topic.pk)
+    if not request.session.get(session_key,False):
+        topic.views+=1
+        topic.save()
+        request.session[session_key]=True
     return render(request,'topic_posts.html',{'topic':topic})
 
 @method_decorator(login_required , name='dispatch') 
@@ -114,6 +119,10 @@ class ReplyTopicView(View):
             post.topic=topic
             post.created_by=request.user
             post.save()
+
+            topic.updated_by=request.user
+            topic.updated_dt=timezone.now()
+            topic.save()
             return redirect('topic_posts',board_id=board_id,topic_id=topic_id)
         return self.render(request,topic,form)
     
@@ -138,17 +147,31 @@ class ReplyTopicView(View):
 #         form=PostForm()
 #      return render(request,'reply_topic.html',{'topic':topic,'form':form})
 @method_decorator(login_required,name="dispatch")
-class PostUpdateView(UpdateView):
-    model=Post
-    fields=("message",)
-    template_name='edit_post.html'
-    pk_url_kwarg='post_id'
-    context_object_name='post'
+# class PostUpdateView(UpdateView):
+    # model=Post
+    # fields=("message",)
+    # template_name='edit_post.html'
+    # pk_url_kwarg='post_id'
+    # context_object_name='post'
+    
+    # def form_valid(self,form):
+    #     post=form.save(commit=False)
+    #     post.updated_by=self.request.user
+    #     post.updated_dt=timezone.now()
+    #     post.save()
 
-    def form_valid(self,form):
-        post=form.save(commit=False)
-        post.updated_by=self.request.user
-        post.updated_dt=timezone.now()
-        post.save()
+    #     return redirect("topic_posts",board_id=post.topic.board.pk,topic_id=post.topic.pk)
 
-        return redirect("topic_posts",board_id=post.topic.board.pk,topic_id=post.topic.pk)
+# not complete
+class PostUpdateView(View):
+    def render(self,request,post,form):
+        return render(request,'edit_post.html',{"post":post,"form":form})
+    def post(self,request,board_id,topic_id,post_id):
+        post=get_object_or_404(Post,board__pk=board_id,topic__pk=topic_id,pk=post_id)
+        print(post)
+
+    def get(self,request,board_id,topic_id,post_id):
+        post=get_object_or_404(Post,topic__pk=topic_id,pk=post_id)
+        # return HttpResponse(post.message,'khalid')
+        form=PostForm()
+        return self.render(request,post,form)

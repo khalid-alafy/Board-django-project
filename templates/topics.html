@@ -30,8 +30,12 @@
             <td>{{topic.created_by.username}}</td>
             <td>{{topic.topic_no}}</td>
             <td>{{topic.views}}</td>  
-            <td>{{topic.created_dt}}</td>
-
+            <td>{%if not topic.updated_dt %}
+                    {{topic.created_dt}}
+                {%else%}
+                    {{topic.updated_dt}}
+                {%endif%}
+            </td>
         </tr>
         {%endfor%}
     </tbody>

@@ -15,7 +15,7 @@
 <form method="post" class="mb-4" novalidate>
     {% csrf_token %}
     {% include 'includes/form.html' %}
-    <button type="submit" class="btn btn-primary">Post Reply</button>
+    <button type="submit" class="btn btn-primary mt-2">Post Reply</button>
 </form>
 {%for post in topic.posts.all%}
 <div class="col-10 card mb-2 p-2">
